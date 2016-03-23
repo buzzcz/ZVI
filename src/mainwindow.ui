@@ -13,7 +13,21 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>401</width>
+      <height>221</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
@@ -25,8 +39,9 @@
    </property>
    <widget class="QMenu" name="menuWhat_should_I_type">
     <property name="title">
-     <string>File</string>
+     <string>&amp;File</string>
     </property>
+    <addaction name="action_Load"/>
     <addaction name="actionExit"/>
    </widget>
    <addaction name="menuWhat_should_I_type"/>
@@ -38,6 +53,8 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="action_Load"/>
+   <addaction name="actionOpenCVCanny"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionExit">
@@ -48,7 +65,20 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Exit</string>
+    <string>&amp;Exit</string>
+   </property>
+  </action>
+  <action name="action_Load">
+   <property name="text">
+    <string>&amp;Load</string>
+   </property>
+   <property name="toolTip">
+    <string>Load image &quot;../lena.jpg&quot;</string>
+   </property>
+  </action>
+  <action name="actionOpenCVCanny">
+   <property name="text">
+    <string>OpenCVCanny</string>
    </property>
   </action>
  </widget>
