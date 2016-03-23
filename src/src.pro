@@ -11,6 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = src
 TEMPLATE = app
 
+LIBS += -lopencv_core -lopencv_flann -lopencv_highgui -lopencv_imgproc
 
 SOURCES += main.cpp\
         mainwindow.cpp
