@@ -14,9 +14,12 @@ TEMPLATE = app
 LIBS += -lopencv_core -lopencv_flann -lopencv_highgui -lopencv_imgproc
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp\
+        defineddirection.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h\
+            defineddirection.h
 
 FORMS    += \
-    mainwindow.ui
+    mainwindow.ui\
+    defineddirection.ui

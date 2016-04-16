@@ -55,6 +55,7 @@
    </attribute>
    <addaction name="action_Load"/>
    <addaction name="actionOpenCVCanny"/>
+   <addaction name="actionDefinedDirection"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionExit">
@@ -67,18 +68,35 @@
    <property name="text">
     <string>&amp;Exit</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
   </action>
   <action name="action_Load">
    <property name="text">
     <string>&amp;Load</string>
    </property>
    <property name="toolTip">
-    <string>Load image &quot;../lena.jpg&quot;</string>
+    <string>Load image</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
    </property>
   </action>
   <action name="actionOpenCVCanny">
    <property name="text">
-    <string>OpenCVCanny</string>
+    <string>OpenCV Canny</string>
+   </property>
+   <property name="toolTip">
+    <string>Edge detection implemented in OpenCV - Canny</string>
+   </property>
+  </action>
+  <action name="actionDefinedDirection">
+   <property name="text">
+    <string>Defined Direction</string>
+   </property>
+   <property name="toolTip">
+    <string>Edge detection in defined direction</string>
    </property>
   </action>
  </widget>

@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "defineddirection.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -25,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
+	ui->centralWidget->addAction(ui->actionExit);
 }
 
 MainWindow::~MainWindow()
@@ -105,4 +107,10 @@ void MainWindow::on_action_Load_triggered()
 	ui->label->setPixmap(p);
 	ui->label->setFixedSize(p.size());
 	ui->centralWidget->setFixedSize(p.size());
+}
+
+void MainWindow::on_actionDefinedDirection_triggered()
+{
+	DefinedDirection *w = new DefinedDirection(&img, this);
+	w->show();
 }

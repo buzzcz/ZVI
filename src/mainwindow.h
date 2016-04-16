@@ -24,6 +24,8 @@ class MainWindow : public QMainWindow
 
 		void on_action_Load_triggered();
 
+		void on_actionDefinedDirection_triggered();
+
 	private:
 		Ui::MainWindow *ui;
 };
