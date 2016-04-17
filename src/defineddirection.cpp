@@ -38,88 +38,88 @@ void DefinedDirection::detectEdges() {
 		case 0:
 			for (int i = 0; i < blured.rows; i++) {
 				for (int j = 0; j < blured.cols; j++) {
-			if (j == 0) {
-				edges.row(i).col(j) = blured.row(i).col(j);
-			} else {
-				edges.row(i).col(j) = sharp * abs(blured.row(i).col(j) - blured.row(i).col(j - 1));
-			}
+					if (j == 0) {
+						edges.row(i).col(j) = blured.row(i).col(j);
+					} else {
+						edges.row(i).col(j) = sharp * abs(blured.row(i).col(j) - blured.row(i).col(j - 1));
+					}
 				}
 			}
 			break;
 		case 1:
 			for (int i = 0; i < blured.rows; i++) {
 				for (int j = 0; j < blured.cols; j++) {
-			if (j == 0 || i == 0) {
-				edges.row(i).col(j) = blured.row(i).col(j);
-			} else {
-				edges.row(i).col(j) = sharp * abs(blured.row(i).col(j) - blured.row(i - 1).col(j - 1));
-			}
+					if (j == 0 || i == 0) {
+						edges.row(i).col(j) = blured.row(i).col(j);
+					} else {
+						edges.row(i).col(j) = sharp * abs(blured.row(i).col(j) - blured.row(i - 1).col(j - 1));
+					}
 				}
 			}
 			break;
 		case 2:
 			for (int i = 0; i < blured.rows; i++) {
 				for (int j = 0; j < blured.cols; j++) {
-			if (i == 0) {
-				edges.row(i).col(j) = blured.row(i).col(j);
-			} else {
-				edges.row(i).col(j) = sharp * abs(blured.row(i).col(j) - blured.row(i - 1).col(j));
-			}
+					if (i == 0) {
+						edges.row(i).col(j) = blured.row(i).col(j);
+					} else {
+						edges.row(i).col(j) = sharp * abs(blured.row(i).col(j) - blured.row(i - 1).col(j));
+					}
 				}
 			}
 			break;
 		case 3:
 			for (int i = 0; i < blured.rows; i++) {
 				for (int j = 0; j < blured.cols; j++) {
-			if (i == 0 || j == blured.cols - 1) {
-				edges.row(i).col(j) = blured.row(i).col(j);
-			} else {
-				edges.row(i).col(j) = sharp * abs(blured.row(i).col(j) - blured.row(i - 1).col(j + 1));
-			}
+					if (i == 0 || j == blured.cols - 1) {
+						edges.row(i).col(j) = blured.row(i).col(j);
+					} else {
+						edges.row(i).col(j) = sharp * abs(blured.row(i).col(j) - blured.row(i - 1).col(j + 1));
+					}
 				}
 			}
 			break;
 		case 4:
 			for (int i = 0; i < blured.rows; i++) {
 				for (int j = 0; j < blured.cols; j++) {
-			if (j == blured.cols - 1) {
-				edges.row(i).col(j) = blured.row(i).col(j);
-			} else {
-				edges.row(i).col(j) = sharp * abs(blured.row(i).col(j) - blured.row(i).col(j + 1));
-			}
+					if (j == blured.cols - 1) {
+						edges.row(i).col(j) = blured.row(i).col(j);
+					} else {
+						edges.row(i).col(j) = sharp * abs(blured.row(i).col(j) - blured.row(i).col(j + 1));
+					}
 				}
 			}
 			break;
 		case 5:
 			for (int i = 0; i < blured.rows; i++) {
 				for (int j = 0; j < blured.cols; j++) {
-			if (j == blured.cols - 1 || i == blured.rows - 1) {
-				edges.row(i).col(j) = blured.row(i).col(j);
-			} else {
-				edges.row(i).col(j) = sharp * abs(blured.row(i).col(j) - blured.row(i + 1).col(j + 1));
-			}
+					if (j == blured.cols - 1 || i == blured.rows - 1) {
+						edges.row(i).col(j) = blured.row(i).col(j);
+					} else {
+						edges.row(i).col(j) = sharp * abs(blured.row(i).col(j) - blured.row(i + 1).col(j + 1));
+					}
 				}
 			}
 			break;
 		case 6:
 			for (int i = 0; i < blured.rows; i++) {
 				for (int j = 0; j < blured.cols; j++) {
-			if (i == blured.rows - 1) {
-				edges.row(i).col(j) = blured.row(i).col(j);
-			} else {
-				edges.row(i).col(j) = sharp * abs(blured.row(i).col(j) - blured.row(i + 1).col(j));
-			}
+					if (i == blured.rows - 1) {
+						edges.row(i).col(j) = blured.row(i).col(j);
+					} else {
+						edges.row(i).col(j) = sharp * abs(blured.row(i).col(j) - blured.row(i + 1).col(j));
+					}
 				}
 			}
 			break;
 		case 7:
 			for (int i = 0; i < blured.rows; i++) {
 				for (int j = 0; j < blured.cols; j++) {
-			if (i == blured.rows - 1 || j == 0) {
-				edges.row(i).col(j) = blured.row(i).col(j);
-			} else {
-				edges.row(i).col(j) = sharp * abs(blured.row(i).col(j) - blured.row(i + 1).col(j - 1));
-			}
+					if (i == blured.rows - 1 || j == 0) {
+						edges.row(i).col(j) = blured.row(i).col(j);
+					} else {
+						edges.row(i).col(j) = sharp * abs(blured.row(i).col(j) - blured.row(i + 1).col(j - 1));
+					}
 				}
 			}
 			break;

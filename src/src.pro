@@ -15,11 +15,17 @@ LIBS += -lopencv_core -lopencv_flann -lopencv_highgui -lopencv_imgproc
 
 SOURCES += main.cpp\
         mainwindow.cpp\
-        defineddirection.cpp
+        defineddirection.cpp\
+        laplace.cpp\
+        canny.cpp
 
 HEADERS  += mainwindow.h\
-            defineddirection.h
+            defineddirection.h\
+            laplace.h\
+            canny.h
 
 FORMS    += \
     mainwindow.ui\
-    defineddirection.ui
+    defineddirection.ui\
+    laplace.ui\
+    canny.ui

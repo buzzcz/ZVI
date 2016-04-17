@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "defineddirection.h"
+#include "laplace.h"
+#include "canny.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -112,5 +114,17 @@ void MainWindow::on_action_Load_triggered()
 void MainWindow::on_actionDefinedDirection_triggered()
 {
 	DefinedDirection *w = new DefinedDirection(&img, this);
+	w->show();
+}
+
+void MainWindow::on_actionLaplace_triggered()
+{
+	Laplace *w = new Laplace(&img, this);
+	w->show();
+}
+
+void MainWindow::on_actionCanny_triggered()
+{
+	CannyDetection *w = new CannyDetection(&img, this);
 	w->show();
 }

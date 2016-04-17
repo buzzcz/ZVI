@@ -26,6 +26,10 @@ class MainWindow : public QMainWindow
 
 		void on_actionDefinedDirection_triggered();
 
+		void on_actionLaplace_triggered();
+
+		void on_actionCanny_triggered();
+
 	private:
 		Ui::MainWindow *ui;
 };

@@ -56,6 +56,8 @@
    <addaction name="action_Load"/>
    <addaction name="actionOpenCVCanny"/>
    <addaction name="actionDefinedDirection"/>
+   <addaction name="actionLaplace"/>
+   <addaction name="actionCanny"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionExit">
@@ -97,6 +99,22 @@
    </property>
    <property name="toolTip">
     <string>Edge detection in defined direction</string>
+   </property>
+  </action>
+  <action name="actionLaplace">
+   <property name="text">
+    <string>Laplace</string>
+   </property>
+   <property name="toolTip">
+    <string>Edge detection using Laplace operator</string>
+   </property>
+  </action>
+  <action name="actionCanny">
+   <property name="text">
+    <string>Canny</string>
+   </property>
+   <property name="toolTip">
+    <string>Edge detection using Canny edge detector</string>
    </property>
   </action>
  </widget>
