@@ -9,7 +9,6 @@ Laplace::Laplace(cv::Mat *src, QWidget *parent) :
 	prepareRadioButtons();
 
 	cv::cvtColor((*src), img, CV_BGR2GRAY);
-	//(*src).copyTo(img);
 	detectEdges();
 }
 
@@ -36,7 +35,6 @@ void Laplace::detectEdges() {
 	cv::filter2D(blured, edges, -1, op);
 
 	QPixmap p = QPixmap::fromImage(QImage((unsigned char*) edges.data, edges.cols, edges.rows, QImage::Format_Indexed8));
-	//QPixmap p = QPixmap::fromImage(QImage((unsigned char*) edges.data, edges.cols, edges.rows, QImage::Format_RGB888).rgbSwapped());
 	ui->label->setPixmap(p);
 	ui->label->setFixedSize(p.size());
 	ui->centralwidget->setFixedSize(p.size());

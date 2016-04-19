@@ -24,6 +24,10 @@ class CannyDetection : public QMainWindow
 	private:
 		Ui::CannyDetection *ui;
 		cv::Mat img;
+
+		void getGradientsAndDirections(cv::Mat *Gx, cv::Mat *Gy, cv::Mat *G, cv::Mat *direction);
+		void nonMaximumSuppression(cv::Mat *G, cv::Mat *direction);
+		void doubleThresholding(cv::Mat *G);
 };
 
 #endif // CANNYDETECTION_H

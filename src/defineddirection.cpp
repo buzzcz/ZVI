@@ -10,7 +10,6 @@ DefinedDirection::DefinedDirection(cv::Mat *src, QWidget *parent) :
 	prepareDirectionComboBox();
 
 	cv::cvtColor((*src), img, CV_BGR2GRAY);
-	//(*src).copyTo(img);
 	detectEdges();
 }
 
@@ -128,7 +127,6 @@ void DefinedDirection::detectEdges() {
 	}
 
 	QPixmap p = QPixmap::fromImage(QImage((unsigned char*) edges.data, edges.cols, edges.rows, QImage::Format_Indexed8));
-	//QPixmap p = QPixmap::fromImage(QImage((unsigned char*) edges.data, edges.cols, edges.rows, QImage::Format_RGB888).rgbSwapped());
 	ui->label->setPixmap(p);
 	ui->label->setFixedSize(p.size());
 	ui->centralwidget->setFixedSize(p.size());
