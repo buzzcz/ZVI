@@ -1,5 +1,6 @@
 #include "canny.h"
 #include "ui_canny.h"
+#include <iostream>
 
 CannyDetection::CannyDetection(cv::Mat *src, QWidget *parent) :
 	QMainWindow(parent),
@@ -23,8 +24,11 @@ void CannyDetection::detectEdges() {
 	cv::GaussianBlur(img, blured, cv::Size(5, 5), 1.4);
 
 	cv::Mat Gx, Gy;
-	cv::Sobel(blured, Gx, -1, 1, 0);
-	cv::Sobel(blured, Gy, -1, 0, 1);
+	cv::Sobel(blured, Gx, CV_64F, 1, 0);
+	cv::Sobel(blured, Gy, CV_64F, 0, 1);
+	cv::convertScaleAbs(Gx, Gx);
+	cv::convertScaleAbs(Gy, Gy);
+
 
 	cv::Mat G, direction;
 	G.create(Gx.size(), Gx.type());
@@ -50,7 +54,7 @@ void CannyDetection::getGradientsAndDirections(cv::Mat *Gx, cv::Mat *Gy, cv::Mat
 
 			G->row(i).col(j) = sqrt(Gxi * Gxi + Gyi * Gyi);
 
-			double angle = (atan2(Gxi, Gyi) / M_PI) * 180;
+			double angle = (atan2(Gyi, Gxi) / M_PI) * 180;
 			if ((angle > -22.5 && angle < 22.5) || angle > 157.5 || angle < -157.5) {
 				direction->at<uchar>(i, j) = 0;
 			} else if ((angle > 22.5 && angle < 67.5) || (angle > -157.5 && angle < -112.5)) {
