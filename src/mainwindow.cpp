@@ -82,7 +82,7 @@ void MainWindow::on_actionOpenCVCanny_triggered()
 void MainWindow::on_action_Load_triggered()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
-        tr("Open Image"), QDir::currentPath(), tr("Image Files (*.png *.jpg *.bmp)"));
+		tr("Open Image"), QDir::currentPath(), tr("Image Files (*.png *.jpg *.bmp)"));
 
 //    QString fileName = QFileDialog::getOpenFileName(this,         //to je moje
 //        tr("Open Image"), "/usr/share/backgrounds/linuxmint-rosa", tr("Image Files (*.png *.jpg *.bmp)"));
@@ -104,8 +104,7 @@ void MainWindow::on_action_Load_triggered()
         cv::resize(src, img, size);
     }
 
-
-	QPixmap p = QPixmap::fromImage(QImage((unsigned char*) img.data, img.cols, img.rows, QImage::Format_RGB888).rgbSwapped());
+	QPixmap p = QPixmap::fromImage(QImage((unsigned char*) img.data, img.cols, img.rows, img.step, QImage::Format_RGB888).rgbSwapped());
 	ui->label->setPixmap(p);
 	ui->label->setFixedSize(p.size());
 	ui->centralWidget->setFixedSize(p.size());

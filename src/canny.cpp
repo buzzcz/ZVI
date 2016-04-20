@@ -36,7 +36,7 @@ void CannyDetection::detectEdges() {
 
 	doubleThresholding(&G);
 
-	QPixmap p = QPixmap::fromImage(QImage((unsigned char*) G.data, G.cols, G.rows, QImage::Format_Indexed8));
+	QPixmap p = QPixmap::fromImage(QImage((unsigned char*) G.data, G.cols, G.rows, G.step, QImage::Format_Indexed8));
 	ui->label->setPixmap(p);
 	ui->label->setFixedSize(p.size());
 	ui->centralwidget->setFixedSize(p.size());

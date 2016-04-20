@@ -34,7 +34,7 @@ void Laplace::detectEdges() {
 	else op = (cv::Mat_<int>(3,3) << 0, -1, 0, -1, 4, -1, 0, -1, 0);
 	cv::filter2D(blured, edges, -1, op);
 
-	QPixmap p = QPixmap::fromImage(QImage((unsigned char*) edges.data, edges.cols, edges.rows, QImage::Format_Indexed8));
+	QPixmap p = QPixmap::fromImage(QImage((unsigned char*) edges.data, edges.cols, edges.rows, edges.step, QImage::Format_Indexed8));
 	ui->label->setPixmap(p);
 	ui->label->setFixedSize(p.size());
 	ui->centralwidget->setFixedSize(p.size());
