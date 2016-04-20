@@ -4,6 +4,7 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <vector>
 #include <QMainWindow>
 
 namespace Ui {
@@ -27,7 +28,7 @@ class CannyDetection : public QMainWindow
 
 		void getGradientsAndDirections(cv::Mat *Gx, cv::Mat *Gy, cv::Mat *G, cv::Mat *direction);
 		void nonMaximumSuppression(cv::Mat *G, cv::Mat *direction);
-		void doubleThresholding(cv::Mat *G);
+		void hysteresis(cv::Mat *G, cv::Mat *direction);
 };
 
 #endif // CANNYDETECTION_H
