@@ -30,7 +30,9 @@ class MainWindow : public QMainWindow
 
 		void on_actionCanny_triggered();
 
-	private:
+		void on_actionLines_and_Points_triggered();
+
+private:
 		Ui::MainWindow *ui;
 };
 

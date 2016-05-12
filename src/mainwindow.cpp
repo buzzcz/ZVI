@@ -3,6 +3,7 @@
 #include "defineddirection.h"
 #include "laplace.h"
 #include "canny.h"
+#include "pointandline.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -125,5 +126,11 @@ void MainWindow::on_actionLaplace_triggered()
 void MainWindow::on_actionCanny_triggered()
 {
 	CannyDetection *w = new CannyDetection(&img, this);
+	w->show();
+}
+
+void MainWindow::on_actionLines_and_Points_triggered()
+{
+	PointAndLine *w = new PointAndLine(&img, this);
 	w->show();
 }

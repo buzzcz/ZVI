@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>500</width>
     <height>300</height>
    </rect>
   </property>
@@ -33,8 +33,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
-     <height>25</height>
+     <width>500</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuWhat_should_I_type">
@@ -58,6 +58,7 @@
    <addaction name="actionDefinedDirection"/>
    <addaction name="actionLaplace"/>
    <addaction name="actionCanny"/>
+   <addaction name="actionLines_and_Points"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionExit">
@@ -115,6 +116,14 @@
    </property>
    <property name="toolTip">
     <string>Edge detection using Canny edge detector</string>
+   </property>
+  </action>
+  <action name="actionLines_and_Points">
+   <property name="text">
+    <string>Lines and Points</string>
+   </property>
+   <property name="toolTip">
+    <string>Line and Point detection</string>
    </property>
   </action>
  </widget>
