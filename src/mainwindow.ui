@@ -34,7 +34,7 @@
      <x>0</x>
      <y>0</y>
      <width>500</width>
-     <height>22</height>
+     <height>33</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuWhat_should_I_type">
@@ -87,6 +87,9 @@
    </property>
   </action>
   <action name="actionOpenCVCanny">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>OpenCV Canny</string>
    </property>
@@ -95,6 +98,9 @@
    </property>
   </action>
   <action name="actionDefinedDirection">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Defined Direction</string>
    </property>
@@ -103,6 +109,9 @@
    </property>
   </action>
   <action name="actionLaplace">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Laplace</string>
    </property>
@@ -111,6 +120,9 @@
    </property>
   </action>
   <action name="actionCanny">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Canny</string>
    </property>
@@ -119,6 +131,9 @@
    </property>
   </action>
   <action name="actionLines_and_Points">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Lines and Points</string>
    </property>

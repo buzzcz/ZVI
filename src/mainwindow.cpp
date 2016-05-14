@@ -109,6 +109,12 @@ void MainWindow::on_action_Load_triggered()
 	ui->label->setPixmap(p);
 	ui->label->setFixedSize(p.size());
 	ui->centralWidget->setFixedSize(p.size());
+
+    ui->actionCanny->setEnabled(true);
+    ui->actionDefinedDirection->setEnabled(true);
+    ui->actionLaplace->setEnabled(true);
+    ui->actionLines_and_Points->setEnabled(true);
+    ui->actionOpenCVCanny->setEnabled(true);
 }
 
 void MainWindow::on_actionDefinedDirection_triggered()
