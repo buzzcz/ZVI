@@ -32,15 +32,15 @@ void DefinedDirection::detectEdges() {
 	cv::blur(img, blured, cv::Size(3,3));
 	//cv::medianBlur(img, blured, 3);
 
-	edges.create(blured.size(), blured.type());
+    edges.create(blured.size(), CV_64F);
 	switch (direction) {
 		case 0:
 			for (int i = 0; i < blured.rows; i++) {
 				for (int j = 0; j < blured.cols; j++) {
 					if (j == 0) {
-						edges.row(i).col(j) = blured.row(i).col(j);
+                        edges.at<double>(i, j) = blured.at<uchar>(i, j);
 					} else {
-						edges.row(i).col(j) = sharp * abs(blured.row(i).col(j) - blured.row(i).col(j - 1));
+                        edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i, j - 1));
 					}
 				}
 			}
@@ -49,9 +49,9 @@ void DefinedDirection::detectEdges() {
 			for (int i = 0; i < blured.rows; i++) {
 				for (int j = 0; j < blured.cols; j++) {
 					if (j == 0 || i == 0) {
-						edges.row(i).col(j) = blured.row(i).col(j);
+                        edges.at<double>(i, j) = blured.at<uchar>(i, j);
 					} else {
-						edges.row(i).col(j) = sharp * abs(blured.row(i).col(j) - blured.row(i - 1).col(j - 1));
+                        edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i - 1, j - 1));
 					}
 				}
 			}
@@ -60,9 +60,9 @@ void DefinedDirection::detectEdges() {
 			for (int i = 0; i < blured.rows; i++) {
 				for (int j = 0; j < blured.cols; j++) {
 					if (i == 0) {
-						edges.row(i).col(j) = blured.row(i).col(j);
+                        edges.at<double>(i, j) = blured.at<uchar>(i, j);
 					} else {
-						edges.row(i).col(j) = sharp * abs(blured.row(i).col(j) - blured.row(i - 1).col(j));
+                        edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i - 1, j));
 					}
 				}
 			}
@@ -71,9 +71,9 @@ void DefinedDirection::detectEdges() {
 			for (int i = 0; i < blured.rows; i++) {
 				for (int j = 0; j < blured.cols; j++) {
 					if (i == 0 || j == blured.cols - 1) {
-						edges.row(i).col(j) = blured.row(i).col(j);
+                        edges.at<double>(i, j) = blured.at<uchar>(i, j);
 					} else {
-						edges.row(i).col(j) = sharp * abs(blured.row(i).col(j) - blured.row(i - 1).col(j + 1));
+                        edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i - 1, j + 1));
 					}
 				}
 			}
@@ -82,9 +82,9 @@ void DefinedDirection::detectEdges() {
 			for (int i = 0; i < blured.rows; i++) {
 				for (int j = 0; j < blured.cols; j++) {
 					if (j == blured.cols - 1) {
-						edges.row(i).col(j) = blured.row(i).col(j);
+                        edges.at<double>(i, j) = blured.at<uchar>(i, j);
 					} else {
-						edges.row(i).col(j) = sharp * abs(blured.row(i).col(j) - blured.row(i).col(j + 1));
+                        edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i, j + 1));
 					}
 				}
 			}
@@ -93,9 +93,9 @@ void DefinedDirection::detectEdges() {
 			for (int i = 0; i < blured.rows; i++) {
 				for (int j = 0; j < blured.cols; j++) {
 					if (j == blured.cols - 1 || i == blured.rows - 1) {
-						edges.row(i).col(j) = blured.row(i).col(j);
+                        edges.at<double>(i, j) = blured.at<uchar>(i, j);
 					} else {
-						edges.row(i).col(j) = sharp * abs(blured.row(i).col(j) - blured.row(i + 1).col(j + 1));
+                        edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i + 1, j + 1));
 					}
 				}
 			}
@@ -104,9 +104,9 @@ void DefinedDirection::detectEdges() {
 			for (int i = 0; i < blured.rows; i++) {
 				for (int j = 0; j < blured.cols; j++) {
 					if (i == blured.rows - 1) {
-						edges.row(i).col(j) = blured.row(i).col(j);
+                        edges.at<double>(i, j) = blured.at<uchar>(i, j);
 					} else {
-						edges.row(i).col(j) = sharp * abs(blured.row(i).col(j) - blured.row(i + 1).col(j));
+                        edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i + 1, j));
 					}
 				}
 			}
@@ -115,9 +115,9 @@ void DefinedDirection::detectEdges() {
 			for (int i = 0; i < blured.rows; i++) {
 				for (int j = 0; j < blured.cols; j++) {
 					if (i == blured.rows - 1 || j == 0) {
-						edges.row(i).col(j) = blured.row(i).col(j);
+                        edges.at<double>(i, j) = blured.at<uchar>(i, j);
 					} else {
-						edges.row(i).col(j) = sharp * abs(blured.row(i).col(j) - blured.row(i + 1).col(j - 1));
+                        edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i + 1, j - 1));
 					}
 				}
 			}
@@ -126,6 +126,7 @@ void DefinedDirection::detectEdges() {
 			break;
 	}
 
+    cv::convertScaleAbs(edges, edges);
 	QPixmap p = QPixmap::fromImage(QImage((unsigned char*) edges.data, edges.cols, edges.rows, edges.step, QImage::Format_Indexed8));
 	ui->label->setPixmap(p);
 	ui->label->setFixedSize(p.size());
