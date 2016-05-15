@@ -27,8 +27,11 @@ class CannyDetection : public QMainWindow
 		cv::Mat img;
 
 		void getGradientsAndDirections(cv::Mat *Gx, cv::Mat *Gy, cv::Mat *G, cv::Mat *direction);
-		void nonMaximumSuppression(cv::Mat *G, cv::Mat *direction);
-		void hysteresis(cv::Mat *G, cv::Mat *direction);
+        void nonMaximumSuppression(cv::Mat *G, cv::Mat *direction);
+        void hysteresis(cv::Mat *G, cv::Mat *direction);
+        void followEdge(int i, int j, cv::Mat *G, cv::Mat *direction);
+//        void doubleThresholding(cv::Mat *G);
+//        void hysteresis(cv::Mat *G);
 };
 
 #endif // CANNYDETECTION_H
