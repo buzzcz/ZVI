@@ -47,8 +47,6 @@ void CannyDetection::detectEdges() {
     cv::convertScaleAbs(edges, edges);
     QPixmap p = QPixmap::fromImage(QImage((unsigned char*) edges.data, edges.cols, edges.rows, edges.step, QImage::Format_Indexed8));
     ui->label->setPixmap(p);
-    ui->label->setFixedSize(p.size());
-    ui->centralwidget->setFixedSize(p.size());
 }
 
 void CannyDetection::getGradientsAndDirections(cv::Mat *Gx, cv::Mat *Gy, cv::Mat *G, cv::Mat *direction) {
