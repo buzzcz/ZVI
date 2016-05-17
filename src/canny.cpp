@@ -35,15 +35,17 @@ void CannyDetection::detectEdges() {
     direction.create(Gx.size(), Gx.type());
     getGradientsAndDirections(&Gx, &Gy, &G, &direction);
 
-    nonMaximumSuppression(&G, &direction);
+    cv::Mat edges;
+    edges.create(G.size(), G.type());
+    nonMaximumSuppression(&G, &direction, &edges);
 
-    hysteresis(&G, &direction);
+    hysteresis(&edges, &direction);
 
-//    doubleThresholding(&G);
-//    hysteresis(&G);
+//    doubleThresholding(&edges);
+//    hysteresis(&edges);
 
-    cv::convertScaleAbs(G, G);
-    QPixmap p = QPixmap::fromImage(QImage((unsigned char*) G.data, G.cols, G.rows, G.step, QImage::Format_Indexed8));
+    cv::convertScaleAbs(edges, edges);
+    QPixmap p = QPixmap::fromImage(QImage((unsigned char*) edges.data, edges.cols, edges.rows, edges.step, QImage::Format_Indexed8));
     ui->label->setPixmap(p);
     ui->label->setFixedSize(p.size());
     ui->centralwidget->setFixedSize(p.size());
@@ -74,46 +76,48 @@ void CannyDetection::getGradientsAndDirections(cv::Mat *Gx, cv::Mat *Gy, cv::Mat
     }
 }
 
-void CannyDetection::nonMaximumSuppression(cv::Mat *G, cv::Mat *direction) {
+void CannyDetection::nonMaximumSuppression(cv::Mat *G, cv::Mat *direction, cv::Mat *edges) {
     for (int i = 1; i < G->rows - 1; i++) {
         for (int j = 1; j < G->cols - 1; j++) {
+            edges->at<double>(i, j) = G->at<double>(i, j);
             switch (direction->at<uchar>(i, j)) {
             case 0:
-                if (G->at<double>(i, j) <= G->at<double>(i, j - 1) || G->at<double>(i, j) <= G->at<double>(i, j + 1)) G->at<double>(i, j) = 0;
+                if (G->at<double>(i, j) <= G->at<double>(i, j - 1) || G->at<double>(i, j) <= G->at<double>(i, j + 1)) edges->at<double>(i, j) = 0;
                 break;
             case 45:
-                if (G->at<double>(i, j) <= G->at<double>(i - 1, j + 1) || G->at<double>(i, j) <= G->at<double>(i + 1, j - 1)) G->at<double>(i, j) = 0;
+                if (G->at<double>(i, j) <= G->at<double>(i - 1, j + 1) || G->at<double>(i, j) <= G->at<double>(i + 1, j - 1)) edges->at<double>(i, j) = 0;
                 break;
             case 90:
-                if (G->at<double>(i, j) <= G->at<double>(i - 1, j) || G->at<double>(i, j) <= G->at<double>(i + 1, j)) G->at<double>(i, j) = 0;
+                if (G->at<double>(i, j) <= G->at<double>(i - 1, j) || G->at<double>(i, j) <= G->at<double>(i + 1, j)) edges->at<double>(i, j) = 0;
                 break;
-            default:
-                if (G->at<double>(i, j) <= G->at<double>(i - 1, j - 1) || G->at<double>(i, j) <= G->at<double>(i + 1, j + 1)) G->at<double>(i, j) = 0;
+            case 135:
+                if (G->at<double>(i, j) <= G->at<double>(i - 1, j - 1) || G->at<double>(i, j) <= G->at<double>(i + 1, j + 1)) edges->at<double>(i, j) = 0;
                 break;
             }
+            //if (G->at<double>(i, j) <= G->at<double>(i, j - 1) || G->at<double>(i, j) <= G->at<double>(i, j + 1) || G->at<double>(i, j) <= G->at<double>(i - 1, j + 1) || G->at<double>(i, j) <= G->at<double>(i + 1, j - 1) || G->at<double>(i, j) <= G->at<double>(i - 1, j) || G->at<double>(i, j) <= G->at<double>(i + 1, j) || G->at<double>(i, j) <= G->at<double>(i - 1, j - 1) || G->at<double>(i, j) <= G->at<double>(i + 1, j + 1)) G->at<double>(i, j) = 0;
         }
     }
 }
 
-void CannyDetection::hysteresis(cv::Mat *G, cv::Mat *direction) {
+void CannyDetection::hysteresis(cv::Mat *edges, cv::Mat *direction) {
     double min = ui->MinSpinBox->value(), max = min * ui->RatioSpinBox->value();
-    for (int i = 1; i < G->rows - 1; i++) {
-        for (int j = 1; j < G->cols - 1; j++) {
-            if (G->at<double>(i, j) > max) G->at<double>(i, j) = 255;
+    for (int i = 1; i < edges->rows - 1; i++) {
+        for (int j = 1; j < edges->cols - 1; j++) {
+            if (edges->at<double>(i, j) > max) edges->at<double>(i, j) = 255;
         }
     }
 
-    for (int i = 1; i < G->rows - 1; i++) {
-        for (int j = 1; j < G->cols - 1; j++) {
-            if (G->at<double>(i, j) == 255) {
-                followEdge(i, j, G, direction);
+    for (int i = 1; i < edges->rows - 1; i++) {
+        for (int j = 1; j < edges->cols - 1; j++) {
+            if (edges->at<double>(i, j) == 255) {
+                followEdge(i, j, edges, direction);
             }
         }
     }
 
-    for (int i = 1; i < G->rows - 1; i++) {
-        for (int j = 1; j < G->cols - 1; j++) {
-            if (G->at<double>(i, j) != 255) G->at<double>(i, j) = 0;
+    for (int i = 1; i < edges->rows - 1; i++) {
+        for (int j = 1; j < edges->cols - 1; j++) {
+            if (edges->at<double>(i, j) != 255) edges->at<double>(i, j) = 0;
         }
     }
 }
@@ -166,25 +170,25 @@ void CannyDetection::followEdge(int i, int j, cv::Mat *G, cv::Mat *direction) {
     }
 }
 
-//void CannyDetection::doubleThresholding(cv::Mat *G) {
+//void CannyDetection::doubleThresholding(cv::Mat *edges) {
 //    double min = ui->MinSpinBox->value(), max = min * ui->RatioSpinBox->value();
-//    for (int i = 1; i < G->rows - 1; i++) {
-//        for (int j = 1; j < G->cols - 1; j++) {
-//            if (G->at<double>(i, j) > max) G->at<double>(i, j) = 255;
-//            else if (G->at<double>(i, j) > min) G->at<double>(i, j) = 126;
-//            else G->at<double>(i, j) = 0;
+//    for (int i = 1; i < edges->rows - 1; i++) {
+//        for (int j = 1; j < edges->cols - 1; j++) {
+//            if (edges->at<double>(i, j) > max) edges->at<double>(i, j) = 255;
+//            else if (edges->at<double>(i, j) > min) edges->at<double>(i, j) = 126;
+//            else edges->at<double>(i, j) = 0;
 //        }
 //    }
 //}
 
-//void CannyDetection::hysteresis(cv::Mat *G) {
-//    for (int i = 1; i < G->rows - 1; i++) {
-//        for (int j = 1; j < G->cols - 1; j++) {
-//            if (G->at<double>(i, j) == 126) {
+//void CannyDetection::hysteresis(cv::Mat *edges) {
+//    for (int i = 1; i < edges->rows - 1; i++) {
+//        for (int j = 1; j < edges->cols - 1; j++) {
+//            if (edges->at<double>(i, j) == 126) {
 //                int k = -1, l = -1;
 //                while (k < 2) {
-//                    if (G->at<double>(i + k, j + l) == 255) {
-//                        G->at<double>(i, j) = 125;
+//                    if (edges->at<double>(i + k, j + l) == 255) {
+//                        edges->at<double>(i, j) = 125;
 //                        break;
 //                    }
 //                    if (++l >= 2) {
@@ -192,7 +196,7 @@ void CannyDetection::followEdge(int i, int j, cv::Mat *G, cv::Mat *direction) {
 //                        k++;
 //                    }
 //                }
-//                if (G->at<double>(i, j) == 126) G->at<double>(i, j) = 0;
+//                if (edges->at<double>(i, j) == 126) edges->at<double>(i, j) = 0;
 //            }
 //        }
 //    }
