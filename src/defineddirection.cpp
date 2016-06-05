@@ -5,9 +5,8 @@ DefinedDirection::DefinedDirection(cv::Mat *src, QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::DefinedDirection)
 {
-	ui->setupUi(this);
-	connect(ui->sharpCoefSpinBox, SIGNAL(valueChanged(double)), this, SLOT(detectEdges()));
-	prepareDirectionComboBox();
+    ui->setupUi(this);
+    prepareGUI();
 
 	cv::cvtColor((*src), img, CV_BGR2GRAY);
 	detectEdges();
@@ -18,13 +17,17 @@ DefinedDirection::~DefinedDirection()
 	delete ui;
 }
 
-void DefinedDirection::prepareDirectionComboBox() {
+void DefinedDirection::prepareGUI() {
 	QStringList directions = QStringList() << tr("Right (0)") << tr("Top-Right (1)") << tr("Top (2)") << tr("Top-Left (3)") << tr("Left (4)") << tr("Bottom-Left (5)") << tr("Bottom (6)") << tr("Bottom-Right (7)");
 	ui->directionComboBox->addItems(directions);
 	connect(ui->directionComboBox, SIGNAL(activated(int)), this, SLOT(detectEdges()));
+
+    connect(ui->sharpCoefSpinBox, SIGNAL(valueChanged(double)), this, SLOT(detectEdges()));
+
+    connect(ui->saveButton, SIGNAL(clicked(bool)), this, SLOT(saveImage()));
 }
 
-void DefinedDirection::detectEdges() {
+cv::Mat DefinedDirection::detectEdges() {
 	double sharp = ui->sharpCoefSpinBox->value();
 	int direction = ui->directionComboBox->currentIndex();
 	cv::Mat edges;
@@ -129,4 +132,22 @@ void DefinedDirection::detectEdges() {
     cv::convertScaleAbs(edges, edges);
 	QPixmap p = QPixmap::fromImage(QImage((unsigned char*) edges.data, edges.cols, edges.rows, edges.step, QImage::Format_Indexed8));
     ui->label->setPixmap(p);
+    return edges;
+}
+
+void DefinedDirection::saveImage() {
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Image"), QDir::currentPath(), tr("Image Files (*.png *.jpg *.bmp)"));
+    if (!fileName.isNull() && !fileName.isEmpty()) {
+        QFileInfo info(fileName);
+        if (info.suffix().isNull() || info.suffix().isEmpty())
+            fileName.append(".png");
+        else if (QString::compare(info.suffix(), "png", Qt::CaseInsensitive) != 0 && QString::compare(info.suffix(), "jpg", Qt::CaseInsensitive) != 0 && QString::compare(info.suffix(), "bmp", Qt::CaseInsensitive) != 0)
+            fileName.append(".png");
+        cv::Mat img = detectEdges();
+        imwrite(fileName.toStdString(), img);
+        QMessageBox ok;
+        ok.setWindowTitle(tr("Image saved"));
+        ok.setText(tr("Image has been saved succesfully"));
+        ok.exec();
+    }
 }

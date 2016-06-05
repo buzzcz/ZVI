@@ -1,16 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "defineddirection.h"
-#include "laplace.h"
-#include "canny.h"
-#include "pointandline.h"
-#include <opencv2/core/core.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <iostream>
-
-#include <QDir>
-#include <QFileDialog>
 
 using namespace cv;
 

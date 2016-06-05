@@ -1,9 +1,16 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "defineddirection.h"
+#include "laplace.h"
+#include "canny.h"
+#include "pointandline.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
 #include <QMainWindow>
+#include <QDir>
+#include <QFileDialog>
 
 namespace Ui {
 	class MainWindow;

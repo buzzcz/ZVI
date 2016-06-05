@@ -5,6 +5,9 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <QMainWindow>
+#include <QDir>
+#include <QFileDialog>
+#include <QMessageBox>
 
 namespace Ui {
 	class DefinedDirection;
@@ -19,13 +22,14 @@ class DefinedDirection : public QMainWindow
 		~DefinedDirection();
 
 	public slots:
-		void detectEdges();
+        cv::Mat detectEdges();
+        void saveImage();
 
 	private:
 		Ui::DefinedDirection *ui;
 		cv::Mat img;
 
-		void prepareDirectionComboBox();
+        void prepareGUI();
 };
 
 #endif // DEFINEDDIRECTION_H

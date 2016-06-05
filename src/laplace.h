@@ -5,6 +5,9 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <QMainWindow>
+#include <QDir>
+#include <QFileDialog>
+#include <QMessageBox>
 
 namespace Ui {
 	class Laplace;
@@ -19,14 +22,15 @@ class Laplace : public QMainWindow
 		~Laplace();
 
 	public slots:
-		void detectEdges();
+        cv::Mat detectEdges();
+        void saveImage();
 
 	private:
 		Ui::Laplace *ui;
 		cv::Mat img;
 		cv::Mat op;
 
-		void prepareRadioButtons();
+        void prepareGUI();
 };
 
 #endif // LAPLACE_H

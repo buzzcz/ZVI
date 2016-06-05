@@ -7,8 +7,7 @@ CannyDetection::CannyDetection(cv::Mat *src, QWidget *parent) :
     ui(new Ui::CannyDetection)
 {
     ui->setupUi(this);
-    connect(ui->MinSpinBox, SIGNAL(valueChanged(double)), this, SLOT(detectEdges()));
-    connect(ui->RatioSpinBox, SIGNAL(valueChanged(int)), this, SLOT(detectEdges()));
+    prepareGUI();
 
     cv::cvtColor((*src), img, CV_BGR2GRAY);
     detectEdges();
@@ -19,7 +18,13 @@ CannyDetection::~CannyDetection()
     delete ui;
 }
 
-void CannyDetection::detectEdges() {
+void CannyDetection::prepareGUI() {
+    connect(ui->MinSpinBox, SIGNAL(valueChanged(double)), this, SLOT(detectEdges()));
+    connect(ui->RatioSpinBox, SIGNAL(valueChanged(int)), this, SLOT(detectEdges()));
+    connect(ui->saveButton, SIGNAL(clicked(bool)), this, SLOT(saveImage()));
+}
+
+cv::Mat CannyDetection::detectEdges() {
     cv::Mat blured;
     cv::GaussianBlur(img, blured, cv::Size(5, 5), 1.4);
     //img.copyTo(blured);
@@ -47,6 +52,7 @@ void CannyDetection::detectEdges() {
     cv::convertScaleAbs(edges, edges);
     QPixmap p = QPixmap::fromImage(QImage((unsigned char*) edges.data, edges.cols, edges.rows, edges.step, QImage::Format_Indexed8));
     ui->label->setPixmap(p);
+    return edges;
 }
 
 void CannyDetection::getGradientsAndDirections(cv::Mat *Gx, cv::Mat *Gy, cv::Mat *G, cv::Mat *direction) {
@@ -199,3 +205,20 @@ void CannyDetection::followEdge(int i, int j, cv::Mat *G, cv::Mat *direction) {
 //        }
 //    }
 //}
+
+void CannyDetection::saveImage() {
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Image"), QDir::currentPath(), tr("Image Files (*.png *.jpg *.bmp)"));
+    if (!fileName.isNull() && !fileName.isEmpty()) {
+        QFileInfo info(fileName);
+        if (info.suffix().isNull() || info.suffix().isEmpty())
+            fileName.append(".png");
+        else if (QString::compare(info.suffix(), "png", Qt::CaseInsensitive) != 0 && QString::compare(info.suffix(), "jpg", Qt::CaseInsensitive) != 0 && QString::compare(info.suffix(), "bmp", Qt::CaseInsensitive) != 0)
+            fileName.append(".png");
+        cv::Mat img = detectEdges();
+        imwrite(fileName.toStdString(), img);
+        QMessageBox ok;
+        ok.setWindowTitle(tr("Image saved"));
+        ok.setText(tr("Image has been saved succesfully"));
+        ok.exec();
+    }
+}
