@@ -10,27 +10,32 @@
 #include <QMessageBox>
 
 namespace Ui {
-	class Laplace;
-	}
+class Laplace;
+}
 
 class Laplace : public QMainWindow
 {
-		Q_OBJECT
+    Q_OBJECT
 
-	public:
-		explicit Laplace(cv::Mat *src, QWidget *parent = 0);
-		~Laplace();
+public:
+    explicit Laplace(cv::Mat *src, QWidget *parent = 0);
+    ~Laplace();
 
-	public slots:
-        cv::Mat detectEdges();
-        void saveImage();
+public slots:
+    void detectEdges();
+    void saveImage();
 
-	private:
-		Ui::Laplace *ui;
-		cv::Mat img;
-		cv::Mat op;
+protected:
+    void showEvent(QShowEvent *event);
+    void resizeEvent(QResizeEvent *event);
 
-        void prepareGUI();
+private:
+    Ui::Laplace *ui;
+    cv::Mat img, edges;
+    cv::Mat op;
+
+    void prepareGUI();
+    void showImage();
 };
 
 #endif // LAPLACE_H

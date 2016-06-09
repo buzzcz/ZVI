@@ -1,46 +1,61 @@
 #include "laplace.h"
 #include "ui_laplace.h"
+#include <iostream>
 
 Laplace::Laplace(cv::Mat *src, QWidget *parent) :
-	QMainWindow(parent),
-	ui(new Ui::Laplace)
+    QMainWindow(parent),
+    ui(new Ui::Laplace)
 {
-	ui->setupUi(this);
+    ui->setupUi(this);
+    Laplace::resize(parent->size());
     prepareGUI();
 
-	cv::cvtColor((*src), img, CV_BGR2GRAY);
-	detectEdges();
+    cv::cvtColor((*src), img, CV_BGR2GRAY);
 }
 
 Laplace::~Laplace()
 {
-	delete ui;
+    delete ui;
+}
+
+void Laplace::showEvent(QShowEvent *event) {
+    QMainWindow::showEvent(event);
+    detectEdges();
+}
+
+void Laplace::resizeEvent(QResizeEvent *event) {
+    QMainWindow::resizeEvent(event);
+    showImage();
+}
+
+void Laplace::showImage() {
+    if (!edges.empty()) {
+        cv::Mat tmp;
+        cv::resize(edges, tmp, cv::Size(ui->label->width(), ui->label->height()));
+        ui->label->setPixmap(QPixmap::fromImage(QImage((unsigned char*) tmp.data, tmp.cols, tmp.rows, tmp.step, QImage::Format_Indexed8)));
+    }
 }
 
 void Laplace::prepareGUI() {
-	ui->EightRadioButton->setChecked(true);
-	connect(ui->EightRadioButton, SIGNAL(clicked()), this, SLOT(detectEdges()));
-	connect(ui->FourRadioButton, SIGNAL(clicked()), this, SLOT(detectEdges()));
+    connect(ui->EightRadioButton, SIGNAL(clicked()), this, SLOT(detectEdges()));
+    connect(ui->FourRadioButton, SIGNAL(clicked()), this, SLOT(detectEdges()));
     connect(ui->sharpCoefSpinBox, SIGNAL(valueChanged(double)), this, SLOT(detectEdges()));
     connect(ui->saveButton, SIGNAL(clicked(bool)), this, SLOT(saveImage()));
 }
 
-cv::Mat Laplace::detectEdges() {
-	cv::Mat edges;
-	cv::Mat blured;
-	cv::blur(img, blured, cv::Size(3,3));
-	//cv::medianBlur(img, blured, 3);
+void Laplace::detectEdges() {
+    cv::Mat blured;
+    cv::blur(img, blured, cv::Size(3,3));
+    //cv::medianBlur(img, blured, 3);
 
     edges.create(blured.size(), CV_64F);
-	if (ui->EightRadioButton->isChecked()) op = (cv::Mat_<int>(3,3) << -1, -1, -1, -1, 8, -1, -1, -1, -1);
-	else op = (cv::Mat_<int>(3,3) << 0, -1, 0, -1, 4, -1, 0, -1, 0);
-	cv::filter2D(blured, edges, -1, op);
+    if (ui->EightRadioButton->isChecked()) op = (cv::Mat_<int>(3,3) << -1, -1, -1, -1, 8, -1, -1, -1, -1);
+    else op = (cv::Mat_<int>(3,3) << 0, -1, 0, -1, 4, -1, 0, -1, 0);
+    cv::filter2D(blured, edges, -1, op);
     edges = edges * ui->sharpCoefSpinBox->value();
 
     cv::convertScaleAbs(edges, edges);
-	QPixmap p = QPixmap::fromImage(QImage((unsigned char*) edges.data, edges.cols, edges.rows, edges.step, QImage::Format_Indexed8));
-	ui->label->setPixmap(p);
-    return edges;
+    showImage();
 }
 
 void Laplace::saveImage() {
@@ -51,8 +66,7 @@ void Laplace::saveImage() {
             fileName.append(".png");
         else if (QString::compare(info.suffix(), "png", Qt::CaseInsensitive) != 0 && QString::compare(info.suffix(), "jpg", Qt::CaseInsensitive) != 0 && QString::compare(info.suffix(), "bmp", Qt::CaseInsensitive) != 0)
             fileName.append(".png");
-        cv::Mat img = detectEdges();
-        imwrite(fileName.toStdString(), img);
+        imwrite(fileName.toStdString(), edges);
         QMessageBox ok;
         ok.setWindowTitle(tr("Image saved"));
         ok.setText(tr("Image has been saved succesfully"));

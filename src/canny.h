@@ -10,32 +10,37 @@
 #include <QMessageBox>
 
 namespace Ui {
-	class CannyDetection;
-	}
+class CannyDetection;
+}
 
 class CannyDetection : public QMainWindow
 {
-		Q_OBJECT
+    Q_OBJECT
 
-	public:
-		explicit CannyDetection(cv::Mat *src, QWidget *parent = 0);
-		~CannyDetection();
+public:
+    explicit CannyDetection(cv::Mat *src, QWidget *parent = 0);
+    ~CannyDetection();
 
-	public slots:
-        cv::Mat detectEdges();
-        void saveImage();
+public slots:
+    void detectEdges();
+    void saveImage();
 
-	private:
-		Ui::CannyDetection *ui;
-		cv::Mat img;
+protected:
+    void showEvent(QShowEvent *event);
+    void resizeEvent(QResizeEvent *event);
 
-        void prepareGUI();
-		void getGradientsAndDirections(cv::Mat *Gx, cv::Mat *Gy, cv::Mat *G, cv::Mat *direction);
-        void nonMaximumSuppression(cv::Mat *G, cv::Mat *direction, cv::Mat *edges);
-        void hysteresis(cv::Mat *G, cv::Mat *direction);
-        void followEdge(int i, int j, cv::Mat *G, cv::Mat *direction);
-//        void doubleThresholding(cv::Mat *edges);
-//        void hysteresis(cv::Mat *edges);
+private:
+    Ui::CannyDetection *ui;
+    cv::Mat img, edges;
+
+    void prepareGUI();
+    void getGradientsAndDirections(cv::Mat *Gx, cv::Mat *Gy, cv::Mat *G, cv::Mat *direction);
+    void nonMaximumSuppression(cv::Mat *G, cv::Mat *direction, cv::Mat *edges);
+    void hysteresis(cv::Mat *G, cv::Mat *direction);
+    void followEdge(int i, int j, cv::Mat *G, cv::Mat *direction);
+    void showImage();
+    //        void doubleThresholding(cv::Mat *edges);
+    //        void hysteresis(cv::Mat *edges);
 };
 
 #endif // CANNYDETECTION_H

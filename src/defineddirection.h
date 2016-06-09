@@ -10,26 +10,31 @@
 #include <QMessageBox>
 
 namespace Ui {
-	class DefinedDirection;
-	}
+class DefinedDirection;
+}
 
 class DefinedDirection : public QMainWindow
 {
-		Q_OBJECT
+    Q_OBJECT
 
-	public:
-		explicit DefinedDirection(cv::Mat *src, QWidget *parent = 0);
-		~DefinedDirection();
+public:
+    explicit DefinedDirection(cv::Mat *src, QWidget *parent = 0);
+    ~DefinedDirection();
 
-	public slots:
-        cv::Mat detectEdges();
-        void saveImage();
+public slots:
+    void detectEdges();
+    void saveImage();
 
-	private:
-		Ui::DefinedDirection *ui;
-		cv::Mat img;
+protected:
+    void showEvent(QShowEvent *event);
+    void resizeEvent(QResizeEvent *event);
 
-        void prepareGUI();
+private:
+    Ui::DefinedDirection *ui;
+    cv::Mat img, edges;
+
+    void prepareGUI();
+    void showImage();
 };
 
 #endif // DEFINEDDIRECTION_H

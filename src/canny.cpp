@@ -7,15 +7,33 @@ CannyDetection::CannyDetection(cv::Mat *src, QWidget *parent) :
     ui(new Ui::CannyDetection)
 {
     ui->setupUi(this);
+    CannyDetection::resize(parent->size());
     prepareGUI();
 
-    cv::cvtColor((*src), img, CV_BGR2GRAY);
-    detectEdges();
+    cv::cvtColor(*src, img, CV_BGR2GRAY);
 }
 
 CannyDetection::~CannyDetection()
 {
     delete ui;
+}
+
+void CannyDetection::showEvent(QShowEvent *event) {
+    QMainWindow::showEvent(event);
+    detectEdges();
+}
+
+void CannyDetection::resizeEvent(QResizeEvent *event) {
+    QMainWindow::resizeEvent(event);
+    showImage();
+}
+
+void CannyDetection::showImage() {
+    if (!edges.empty()) {
+        cv::Mat tmp;
+        cv::resize(edges, tmp, cv::Size(ui->label->width(), ui->label->height()));
+        ui->label->setPixmap(QPixmap::fromImage(QImage((unsigned char*) tmp.data, tmp.cols, tmp.rows, tmp.step, QImage::Format_Indexed8)));
+    }
 }
 
 void CannyDetection::prepareGUI() {
@@ -24,7 +42,7 @@ void CannyDetection::prepareGUI() {
     connect(ui->saveButton, SIGNAL(clicked(bool)), this, SLOT(saveImage()));
 }
 
-cv::Mat CannyDetection::detectEdges() {
+void CannyDetection::detectEdges() {
     cv::Mat blured;
     cv::GaussianBlur(img, blured, cv::Size(5, 5), 1.4);
     //img.copyTo(blured);
@@ -40,19 +58,16 @@ cv::Mat CannyDetection::detectEdges() {
     direction.create(Gx.size(), Gx.type());
     getGradientsAndDirections(&Gx, &Gy, &G, &direction);
 
-    cv::Mat edges;
     edges.create(G.size(), G.type());
     nonMaximumSuppression(&G, &direction, &edges);
 
     hysteresis(&edges, &direction);
 
-//    doubleThresholding(&edges);
-//    hysteresis(&edges);
+    //    doubleThresholding(&edges);
+    //    hysteresis(&edges);
 
     cv::convertScaleAbs(edges, edges);
-    QPixmap p = QPixmap::fromImage(QImage((unsigned char*) edges.data, edges.cols, edges.rows, edges.step, QImage::Format_Indexed8));
-    ui->label->setPixmap(p);
-    return edges;
+    showImage();
 }
 
 void CannyDetection::getGradientsAndDirections(cv::Mat *Gx, cv::Mat *Gy, cv::Mat *G, cv::Mat *direction) {
@@ -214,8 +229,7 @@ void CannyDetection::saveImage() {
             fileName.append(".png");
         else if (QString::compare(info.suffix(), "png", Qt::CaseInsensitive) != 0 && QString::compare(info.suffix(), "jpg", Qt::CaseInsensitive) != 0 && QString::compare(info.suffix(), "bmp", Qt::CaseInsensitive) != 0)
             fileName.append(".png");
-        cv::Mat img = detectEdges();
-        imwrite(fileName.toStdString(), img);
+        imwrite(fileName.toStdString(), edges);
         QMessageBox ok;
         ok.setWindowTitle(tr("Image saved"));
         ok.setText(tr("Image has been saved succesfully"));
