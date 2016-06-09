@@ -45,6 +45,7 @@ protected:
 
 private:
     Ui::MainWindow *ui;
+    void showImage();
 };
 
 #endif // MAINWINDOW_H

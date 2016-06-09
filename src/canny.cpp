@@ -31,7 +31,15 @@ void CannyDetection::resizeEvent(QResizeEvent *event) {
 void CannyDetection::showImage() {
     if (!edges.empty()) {
         cv::Mat tmp;
-        cv::resize(edges, tmp, cv::Size(ui->label->width(), ui->label->height()));
+        double width = ui->label->width(), height = ui->label->height();
+        if (width >= height) {
+            double ratio = height / edges.rows;
+            width = edges.cols * ratio;
+        } else {
+            double ratio = width / edges.cols;
+            height = edges.rows * ratio;
+        }
+        cv::resize(edges, tmp, cv::Size(width, height));
         ui->label->setPixmap(QPixmap::fromImage(QImage((unsigned char*) tmp.data, tmp.cols, tmp.rows, tmp.step, QImage::Format_Indexed8)));
     }
 }

@@ -95,7 +95,7 @@ void MainWindow::on_action_Load_triggered()
         //        cv::resize(src, img, size);
         //    }
         ui->label->setPixmap(QPixmap::fromImage(QImage((unsigned char*) img.data, img.cols, img.rows, img.step, QImage::Format_RGB888).rgbSwapped()));
-        MainWindow::resize(img.cols, img.rows);
+        showImage();
 
         ui->actionCanny->setEnabled(true);
         ui->actionDefinedDirection->setEnabled(true);
@@ -107,9 +107,21 @@ void MainWindow::on_action_Load_triggered()
 
 void MainWindow::resizeEvent(QResizeEvent *event) {
     QMainWindow::resizeEvent(event);
+    showImage();
+}
+
+void MainWindow::showImage() {
     if (!img.empty()) {
         cv::Mat tmp;
-        cv::resize(img, tmp, cv::Size(ui->label->width(), ui->label->height()));
+        double width = ui->label->width(), height = ui->label->height();
+        if (width >= height) {
+            double ratio = height / img.rows;
+            width = img.cols * ratio;
+        } else {
+            double ratio = width / img.cols;
+            height = img.rows * ratio;
+        }
+        cv::resize(img, tmp, cv::Size(width, height));
         ui->label->setPixmap(QPixmap::fromImage(QImage((unsigned char*) tmp.data, tmp.cols, tmp.rows, tmp.step, QImage::Format_RGB888).rgbSwapped()));
     }
 }
