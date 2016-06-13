@@ -36,7 +36,7 @@
      <x>0</x>
      <y>0</y>
      <width>500</width>
-     <height>33</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuWhat_should_I_type">
@@ -59,6 +59,7 @@
    <addaction name="actionOpenCVCanny"/>
    <addaction name="actionDefinedDirection"/>
    <addaction name="actionLaplace"/>
+   <addaction name="actionGradient_Method"/>
    <addaction name="actionCanny"/>
    <addaction name="actionLines_and_Points"/>
   </widget>
@@ -141,6 +142,14 @@
    </property>
    <property name="toolTip">
     <string>Line and Point detection</string>
+   </property>
+  </action>
+  <action name="actionGradient_Method">
+   <property name="text">
+    <string>Gradient Method</string>
+   </property>
+   <property name="toolTip">
+    <string>Detect edges using gradient method</string>
    </property>
   </action>
  </widget>

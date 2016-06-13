@@ -5,6 +5,7 @@
 #include "laplace.h"
 #include "canny.h"
 #include "pointandline.h"
+#include "gradientmethod.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -39,6 +40,8 @@ private slots:
     void on_actionCanny_triggered();
 
     void on_actionLines_and_Points_triggered();
+
+		void on_actionGradient_Method_triggered();
 
 protected:
     void resizeEvent(QResizeEvent *event);

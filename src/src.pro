@@ -17,18 +17,21 @@ SOURCES += main.cpp\
         mainwindow.cpp\
         defineddirection.cpp\
         laplace.cpp\
-        canny.cpp \
-    pointandline.cpp
+				canny.cpp \
+		pointandline.cpp \
+		gradientmethod.cpp
 
 HEADERS  += mainwindow.h\
             defineddirection.h\
             laplace.h\
-            canny.h \
-    pointandline.h
+						canny.h \
+		pointandline.h \
+		gradientmethod.h
 
 FORMS    += \
     mainwindow.ui\
     defineddirection.ui\
     laplace.ui\
-    canny.ui \
-    pointandline.ui
+		canny.ui \
+		pointandline.ui \
+		gradientmethod.ui

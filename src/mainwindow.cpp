@@ -149,3 +149,9 @@ void MainWindow::on_actionLines_and_Points_triggered()
     PointAndLine *w = new PointAndLine(&img, this);
     w->show();
 }
+
+void MainWindow::on_actionGradient_Method_triggered()
+{
+	GradientMethod *w = new GradientMethod(&img, this);
+	w->show();
+}
