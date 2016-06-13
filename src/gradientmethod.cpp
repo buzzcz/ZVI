@@ -50,25 +50,14 @@ void GradientMethod::prepareGUI() {
 }
 
 void GradientMethod::detectEdges() {
-		cv::Mat blured, gradientX, gradientY;
+		cv::Mat blured;
 		cv::blur(img, blured, cv::Size(3,3));
 
-		cv::Sobel(blured, gradientX, CV_64F, 1, 0, 3);
-		cv::Sobel(blured, gradientY, CV_64F, 0, 1, 3);
-
-		//edges.create(img.rows - 2, img.cols - 2, img.type());
-		//edges.create(img.rows, img.cols, CV_8UC3);
 		edges = img.clone();
 
 		double magnitude;
 		int val, rows = img.rows - 1, cols = img.cols - 1;
 		double dx, dy;
-
-/*		for (int i = 1; i < edges.rows; i++) {
-			for (int j = 1; j < edges.cols; j++) {
-				edges.at<cv::Vec3b>(i, j) = img.at<cv::Vec3b>(i, j);
-			}
-		} /**/
 
 		for (int i = 1; i < rows; i++) {
 			for (int j = 1; j < cols; j++) {
@@ -84,10 +73,9 @@ void GradientMethod::detectEdges() {
 				edges.at<cv::Vec3b>(i-1, j-1)[1] = val;
 				edges.at<cv::Vec3b>(i-1, j-1)[2] = val;
 			}
-		}/**/
+		}
 
 
-		//cv::convertScaleAbs(edges, edges);
 		showImage();
 }
 

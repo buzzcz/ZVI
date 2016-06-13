@@ -102,6 +102,7 @@ void MainWindow::on_action_Load_triggered()
         ui->actionLaplace->setEnabled(true);
         ui->actionLines_and_Points->setEnabled(true);
         ui->actionOpenCVCanny->setEnabled(true);
+				ui->actionGradient_Method->setEnabled(true);
     }
 }
 

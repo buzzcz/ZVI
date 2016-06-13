@@ -49,6 +49,9 @@
    <addaction name="menuWhat_should_I_type"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -59,9 +62,10 @@
    <addaction name="actionOpenCVCanny"/>
    <addaction name="actionDefinedDirection"/>
    <addaction name="actionLaplace"/>
-   <addaction name="actionGradient_Method"/>
    <addaction name="actionCanny"/>
    <addaction name="actionLines_and_Points"/>
+   <addaction name="separator"/>
+   <addaction name="actionGradient_Method"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionExit">
@@ -145,6 +149,9 @@
    </property>
   </action>
   <action name="actionGradient_Method">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Gradient Method</string>
    </property>
