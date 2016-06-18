@@ -94,6 +94,7 @@ void MainWindow::on_action_Load_triggered()
         //        cv::Mat src = img;
         //        cv::resize(src, img, size);
         //    }
+        if (!img.empty()) {
         ui->label->setPixmap(QPixmap::fromImage(QImage((unsigned char*) img.data, img.cols, img.rows, img.step, QImage::Format_RGB888).rgbSwapped()));
         showImage();
 
@@ -102,7 +103,8 @@ void MainWindow::on_action_Load_triggered()
         ui->actionLaplace->setEnabled(true);
         ui->actionLines_and_Points->setEnabled(true);
         ui->actionOpenCVCanny->setEnabled(true);
-				ui->actionGradient_Method->setEnabled(true);
+        ui->actionGradient_Method->setEnabled(true);
+        }
     }
 }
 

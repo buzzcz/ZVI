@@ -79,7 +79,7 @@ void DefinedDirection::detectEdges() {
                 if (j == 0 || i == 0) {
                     edges.at<double>(i, j) = blured.at<uchar>(i, j);
                 } else {
-                    edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i - 1, j - 1));
+                    edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i + 1, j - 1));
                 }
             }
         }
@@ -90,7 +90,7 @@ void DefinedDirection::detectEdges() {
                 if (i == 0) {
                     edges.at<double>(i, j) = blured.at<uchar>(i, j);
                 } else {
-                    edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i - 1, j));
+                    edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i + 1, j));
                 }
             }
         }
@@ -101,7 +101,7 @@ void DefinedDirection::detectEdges() {
                 if (i == 0 || j == blured.cols - 1) {
                     edges.at<double>(i, j) = blured.at<uchar>(i, j);
                 } else {
-                    edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i - 1, j + 1));
+                    edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i + 1, j + 1));
                 }
             }
         }
@@ -123,7 +123,7 @@ void DefinedDirection::detectEdges() {
                 if (j == blured.cols - 1 || i == blured.rows - 1) {
                     edges.at<double>(i, j) = blured.at<uchar>(i, j);
                 } else {
-                    edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i + 1, j + 1));
+                    edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i - 1, j + 1));
                 }
             }
         }
@@ -134,7 +134,7 @@ void DefinedDirection::detectEdges() {
                 if (i == blured.rows - 1) {
                     edges.at<double>(i, j) = blured.at<uchar>(i, j);
                 } else {
-                    edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i + 1, j));
+                    edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i - 1, j));
                 }
             }
         }
@@ -145,7 +145,7 @@ void DefinedDirection::detectEdges() {
                 if (i == blured.rows - 1 || j == 0) {
                     edges.at<double>(i, j) = blured.at<uchar>(i, j);
                 } else {
-                    edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i + 1, j - 1));
+                    edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i - 1, j - 1));
                 }
             }
         }
