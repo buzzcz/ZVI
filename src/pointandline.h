@@ -1,10 +1,13 @@
-#ifndef POINTANDLINE_H
-#define POINTANDLINE_H
+#ifndef PointAndLine_H
+#define PointAndLine_H
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <QMainWindow>
+#include <QDir>
+#include <QFileDialog>
+#include <QMessageBox>
 
 namespace Ui {
 class PointAndLine;
@@ -12,31 +15,26 @@ class PointAndLine;
 
 class PointAndLine : public QMainWindow
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	/*
-		Constructor of this class.
-		src - pointer to the given original image
-	*/
-	explicit PointAndLine(cv::Mat *src, QWidget *parent = 0);
-	~PointAndLine();
-
-private:
-	Ui::PointAndLine *ui;
-	/* Original image */
-	cv::Mat img;
-	/* Convolution matrix for the detection method */
-	cv::Mat op;
+		explicit PointAndLine(cv::Mat *src, QWidget *parent = 0);
+		~PointAndLine();
 
 public slots:
+    void detectEdges();
+    void saveImage();
 
-	/*
-		Launches the edge detection in given image.
-		Detects line/point given to the selected radio button.
-		Takes direction from the combo box if line detection selected
-	*/
-	void process();
+protected:
+    void showEvent(QShowEvent *event);
+    void resizeEvent(QResizeEvent *event);
+
+private:
+		Ui::PointAndLine *ui;
+    cv::Mat img, edges;
+
+    void prepareGUI();
+    void showImage();
 };
 
-#endif // POINTANDLINE_H
+#endif // PointAndLine_H
