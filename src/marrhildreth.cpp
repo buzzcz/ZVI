@@ -47,6 +47,7 @@ void MarrHildreth::showImage() {
 
 void MarrHildreth::prepareGUI() {
 		connect(ui->saveButton, SIGNAL(clicked(bool)), this, SLOT(saveImage()));
+		connect(ui->tresholdSpin, SIGNAL(valueChanged(double)), this, SLOT(detectEdges()));
 }
 
 void MarrHildreth::detectEdges() {
@@ -104,7 +105,7 @@ void MarrHildreth::detectEdges() {
 					max = newimp[k][i];
 			}
 		}
-		th = int(0.075 * max);
+		th = int(this->ui->tresholdSpin->value() * max);
 
 		for (int i = border2; i < h - border2; i++) {
 			for (int j = border2; j < w - border2; j++) {
