@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QDebug>
 
 using namespace cv;
 
@@ -71,6 +72,7 @@ void MainWindow::on_actionOpenCVCanny_triggered()
 
 void MainWindow::on_action_Load_triggered()
 {
+
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open Image"), QDir::currentPath(), tr("Image Files (*.png *.jpg *.bmp)"));
 
@@ -104,6 +106,7 @@ void MainWindow::on_action_Load_triggered()
         ui->actionLines_and_Points->setEnabled(true);
         ui->actionOpenCVCanny->setEnabled(true);
         ui->actionGradient_Method->setEnabled(true);
+				ui->actionMarr_Hildreth->setEnabled(true);
         }
     }
 }
@@ -157,4 +160,10 @@ void MainWindow::on_actionGradient_Method_triggered()
 {
 	GradientMethod *w = new GradientMethod(&img, this);
 	w->show();
+}
+
+void MainWindow::on_actionMarr_Hildreth_triggered()
+{
+		MarrHildreth *w = new MarrHildreth(&img, this);
+		w->show();
 }

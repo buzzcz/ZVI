@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>300</height>
+    <width>736</width>
+    <height>604</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,7 +35,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>500</width>
+     <width>736</width>
      <height>22</height>
     </rect>
    </property>
@@ -66,6 +66,7 @@
    <addaction name="actionLines_and_Points"/>
    <addaction name="separator"/>
    <addaction name="actionGradient_Method"/>
+   <addaction name="actionMarr_Hildreth"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionExit">
@@ -83,6 +84,9 @@
    </property>
   </action>
   <action name="action_Load">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>&amp;Load</string>
    </property>
@@ -157,6 +161,17 @@
    </property>
    <property name="toolTip">
     <string>Detect edges using gradient method</string>
+   </property>
+  </action>
+  <action name="actionMarr_Hildreth">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Marr-Hildreth</string>
+   </property>
+   <property name="toolTip">
+    <string>Edge detection using Marr-Hildreth edge detector</string>
    </property>
   </action>
  </widget>

@@ -61,15 +61,15 @@ void GradientMethod::detectEdges() {
 
 		for (int i = 1; i < rows; i++) {
 			for (int j = 1; j < cols; j++) {
-                dx = (double) (img.at<uchar>(i+1, j) - img.at<uchar>(i-1, j)) / 2.0;
-                dy = (double) (img.at<uchar>(i, j+1) - img.at<uchar>(i, j-1)) / 2.0;
+								dx = (double) (img.at<uchar>(i+1, j) - img.at<uchar>(i-1, j)) / 2.0;
+								dy = (double) (img.at<uchar>(i, j+1) - img.at<uchar>(i, j-1)) / 2.0;
 
 				magnitude = sqrt(dx * dx + dy * dy);
 
 				val = (int) round(magnitude);
 				if (val > 255) val = 255;
 
-                edges.at<uchar>(i-1, j-1) = val;
+								edges.at<uchar>(i-1, j-1) = val;
 			}
 		}
 
