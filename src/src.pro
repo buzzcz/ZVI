@@ -14,24 +14,26 @@ TEMPLATE = app
 LIBS += -lopencv_core -lopencv_flann -lopencv_highgui -lopencv_imgproc
 
 SOURCES += main.cpp\
-        mainwindow.cpp\
-        defineddirection.cpp\
-        laplace.cpp\
-				canny.cpp \
-		pointandline.cpp \
-		gradientmethod.cpp
+            mainwindow.cpp\
+            defineddirection.cpp\
+            laplace.cpp\
+            canny.cpp \
+            pointandline.cpp \
+            gradientmethod.cpp \
+            marrhildreth.cpp
 
 HEADERS  += mainwindow.h\
             defineddirection.h\
             laplace.h\
-						canny.h \
-		pointandline.h \
-		gradientmethod.h
+            canny.h \
+            pointandline.h \
+            gradientmethod.h \
+            marrhildreth.h
 
-FORMS    += \
-    mainwindow.ui\
-    defineddirection.ui\
-    laplace.ui\
-		canny.ui \
-		pointandline.ui \
-		gradientmethod.ui
+FORMS    += mainwindow.ui\
+            defineddirection.ui\
+            laplace.ui\
+            canny.ui \
+            pointandline.ui \
+            gradientmethod.ui \
+            marrhildreth.ui

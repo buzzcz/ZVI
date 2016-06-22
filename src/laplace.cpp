@@ -57,8 +57,8 @@ void Laplace::detectEdges() {
     //cv::medianBlur(img, blured, 3);
 
     edges.create(blured.size(), CV_64F);
-    if (ui->EightRadioButton->isChecked()) op = (cv::Mat_<int>(3,3) << -1, -1, -1, -1, 8, -1, -1, -1, -1);
-    else op = (cv::Mat_<int>(3,3) << 0, -1, 0, -1, 4, -1, 0, -1, 0);
+    if (ui->EightRadioButton->isChecked()) op = (cv::Mat_<int>(3,3) << 1, 1, 1, 1, -8, 1, 1, 1, 1);
+    else op = (cv::Mat_<int>(3,3) << 0, 1, 0, 1, -4, 1, 0, 1, 0);
     cv::filter2D(blured, edges, -1, op);
     edges = edges * ui->sharpCoefSpinBox->value();
 

@@ -61,92 +61,61 @@ void DefinedDirection::detectEdges() {
     //cv::medianBlur(img, blured, 3);
 
     edges.create(blured.size(), CV_64F);
+
     switch (direction) {
     case 0:
-        for (int i = 0; i < blured.rows; i++) {
-            for (int j = 0; j < blured.cols; j++) {
-                if (j == 0) {
-                    edges.at<double>(i, j) = blured.at<uchar>(i, j);
-                } else {
-                    edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i, j - 1));
-                }
+        for (int i = 1; i < blured.rows - 1; i++) {
+            for (int j = 1; j < blured.cols -1; j++) {
+                edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i, j - 1));
             }
         }
         break;
     case 1:
-        for (int i = 0; i < blured.rows; i++) {
-            for (int j = 0; j < blured.cols; j++) {
-                if (j == 0 || i == 0) {
-                    edges.at<double>(i, j) = blured.at<uchar>(i, j);
-                } else {
-                    edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i + 1, j - 1));
-                }
+        for (int i = 1; i < blured.rows - 1; i++) {
+            for (int j = 1; j < blured.cols -1; j++) {
+                edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i + 1, j - 1));
             }
         }
         break;
     case 2:
-        for (int i = 0; i < blured.rows; i++) {
-            for (int j = 0; j < blured.cols; j++) {
-                if (i == 0) {
-                    edges.at<double>(i, j) = blured.at<uchar>(i, j);
-                } else {
-                    edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i + 1, j));
-                }
+        for (int i = 1; i < blured.rows - 1; i++) {
+            for (int j = 1; j < blured.cols -1; j++) {
+                edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i + 1, j));
             }
         }
         break;
     case 3:
-        for (int i = 0; i < blured.rows; i++) {
-            for (int j = 0; j < blured.cols; j++) {
-                if (i == 0 || j == blured.cols - 1) {
-                    edges.at<double>(i, j) = blured.at<uchar>(i, j);
-                } else {
-                    edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i + 1, j + 1));
-                }
+        for (int i = 1; i < blured.rows - 1; i++) {
+            for (int j = 1; j < blured.cols -1; j++) {
+                edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i + 1, j + 1));
             }
         }
         break;
     case 4:
-        for (int i = 0; i < blured.rows; i++) {
-            for (int j = 0; j < blured.cols; j++) {
-                if (j == blured.cols - 1) {
-                    edges.at<double>(i, j) = blured.at<uchar>(i, j);
-                } else {
-                    edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i, j + 1));
-                }
+        for (int i = 1; i < blured.rows - 1; i++) {
+            for (int j = 1; j < blured.cols -1; j++) {
+                edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i, j + 1));
             }
         }
         break;
     case 5:
-        for (int i = 0; i < blured.rows; i++) {
-            for (int j = 0; j < blured.cols; j++) {
-                if (j == blured.cols - 1 || i == blured.rows - 1) {
-                    edges.at<double>(i, j) = blured.at<uchar>(i, j);
-                } else {
-                    edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i - 1, j + 1));
-                }
+        for (int i = 1; i < blured.rows - 1; i++) {
+            for (int j = 1; j < blured.cols -1; j++) {
+                edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i - 1, j + 1));
             }
         }
         break;
     case 6:
-        for (int i = 0; i < blured.rows; i++) {
-            for (int j = 0; j < blured.cols; j++) {
-                if (i == blured.rows - 1) {
-                    edges.at<double>(i, j) = blured.at<uchar>(i, j);
-                } else {
-                    edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i - 1, j));
-                }
+        for (int i = 1; i < blured.rows - 1; i++) {
+            for (int j = 1; j < blured.cols -1; j++) {
+                edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i - 1, j));
             }
         }
         break;
     case 7:
-        for (int i = 0; i < blured.rows; i++) {
-            for (int j = 0; j < blured.cols; j++) {
-                if (i == blured.rows - 1 || j == 0) {
-                    edges.at<double>(i, j) = blured.at<uchar>(i, j);
-                } else {
-                    edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i - 1, j - 1));
-                }
+        for (int i = 1; i < blured.rows - 1; i++) {
+            for (int j = 1; j < blured.cols -1; j++) {
+                edges.at<double>(i, j) = sharp * abs(blured.at<uchar>(i, j) - blured.at<uchar>(i - 1, j - 1));
             }
         }
         break;
