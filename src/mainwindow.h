@@ -30,8 +30,6 @@ public:
 private slots:
     void on_actionExit_triggered();
 
-    void on_actionOpenCVCanny_triggered();
-
     void on_action_Load_triggered();
 
     void on_actionDefinedDirection_triggered();
@@ -42,15 +40,16 @@ private slots:
 
     void on_actionLines_and_Points_triggered();
 
-		void on_actionGradient_Method_triggered();
+    void on_actionGradient_Method_triggered();
 
-		void on_actionMarr_Hildreth_triggered();
+    void on_actionMarr_Hildreth_triggered();
 
 protected:
     void resizeEvent(QResizeEvent *event);
 
 private:
     Ui::MainWindow *ui;
+    cv::Mat img;
     void showImage();
 };
 

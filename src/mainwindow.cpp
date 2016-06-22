@@ -4,16 +4,6 @@
 
 using namespace cv;
 
-cv::Mat img, gray;
-cv::Mat dst, detected_edges;
-
-int edgeThresh = 1;
-int lowThreshold;
-int const max_lowThreshold = 100;
-int ratio = 3;
-int kernel_size = 3;
-std::string window_name = "OpenCV Canny Edge Detector";
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -30,44 +20,6 @@ MainWindow::~MainWindow()
 void MainWindow::on_actionExit_triggered()
 {
     QApplication::quit();
-}
-
-void CannyThreshold(int, void*)
-{
-    /// Reduce noise with a kernel 3x3
-    blur( gray, detected_edges, Size(3,3) );
-
-    /// Canny detector
-    Canny( detected_edges, detected_edges, lowThreshold, lowThreshold*ratio, kernel_size );
-
-    /// Using Canny's output as a mask, we display our result
-    dst = Scalar::all(0);
-
-    gray.copyTo( dst, detected_edges);
-    imshow( window_name, dst );
-}
-
-void MainWindow::on_actionOpenCVCanny_triggered()
-{
-    if (!img.data) {
-        return;
-    }
-    /// Create a matrix of the same type and size as src (for dst)
-    dst.create( img.size(), img.type() );
-
-    /// Convert the image to grayscale
-    cvtColor( img, gray, CV_BGR2GRAY );
-
-    namedWindow( window_name, WINDOW_AUTOSIZE );// Create a window for display.
-
-    /// Create a Trackbar for user to enter threshold
-    createTrackbar( "Min Threshold:", window_name, &lowThreshold, max_lowThreshold, CannyThreshold );
-
-    /// Show the image
-    CannyThreshold(0, 0);
-
-    /// Wait until user exit program by pressing a key
-    waitKey(0);
 }
 
 void MainWindow::on_action_Load_triggered()
@@ -104,9 +56,8 @@ void MainWindow::on_action_Load_triggered()
         ui->actionDefinedDirection->setEnabled(true);
         ui->actionLaplace->setEnabled(true);
         ui->actionLines_and_Points->setEnabled(true);
-        ui->actionOpenCVCanny->setEnabled(true);
         ui->actionGradient_Method->setEnabled(true);
-				ui->actionMarr_Hildreth->setEnabled(true);
+        ui->actionMarr_Hildreth->setEnabled(true);
         }
     }
 }

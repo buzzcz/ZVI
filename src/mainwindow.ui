@@ -36,7 +36,7 @@
      <x>0</x>
      <y>0</y>
      <width>736</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuWhat_should_I_type">
@@ -59,12 +59,11 @@
     <bool>false</bool>
    </attribute>
    <addaction name="action_Load"/>
-   <addaction name="actionOpenCVCanny"/>
    <addaction name="actionDefinedDirection"/>
    <addaction name="actionLaplace"/>
    <addaction name="actionCanny"/>
-   <addaction name="actionLines_and_Points"/>
    <addaction name="separator"/>
+   <addaction name="actionLines_and_Points"/>
    <addaction name="actionGradient_Method"/>
    <addaction name="actionMarr_Hildreth"/>
   </widget>
@@ -95,17 +94,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
-   </property>
-  </action>
-  <action name="actionOpenCVCanny">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>OpenCV Canny</string>
-   </property>
-   <property name="toolTip">
-    <string>Edge detection implemented in OpenCV - Canny</string>
    </property>
   </action>
   <action name="actionDefinedDirection">
