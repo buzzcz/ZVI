@@ -10,11 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = src
 TEMPLATE = app
-INCLUDEPATH += C:\\OpenCV\\build\\install\\include
-LIBS += -LC:\\OpenCV\\build\\install\\x86\\mingw\\bin \
-        libopencv_core2413 \
-        libopencv_highgui2413 \
-        libopencv_imgproc2413
+LIBS += -lopencv_core -lopencv_highgui -lopencv_imgproc
 
 SOURCES += main.cpp\
             mainwindow.cpp\
