@@ -37,10 +37,8 @@ private:
     void getGradientsAndDirections(cv::Mat *Gx, cv::Mat *Gy, cv::Mat *G, cv::Mat *direction);
     void nonMaximumSuppression(cv::Mat *G, cv::Mat *direction, cv::Mat *edges);
     void hysteresis(cv::Mat *G, cv::Mat *direction);
-    void followEdge(int i, int j, cv::Mat *G, cv::Mat *direction);
+    void followEdge(int i, int j, cv::Mat *edges, cv::Mat *direction);
     void showImage();
-    //        void doubleThresholding(cv::Mat *edges);
-    //        void hysteresis(cv::Mat *edges);
 };
 
 #endif // CANNYDETECTION_H
