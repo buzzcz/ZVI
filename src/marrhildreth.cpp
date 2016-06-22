@@ -47,7 +47,7 @@ void MarrHildreth::showImage() {
 
 void MarrHildreth::prepareGUI() {
 		connect(ui->saveButton, SIGNAL(clicked(bool)), this, SLOT(saveImage()));
-		connect(ui->tresholdSpin, SIGNAL(valueChanged(double)), this, SLOT(detectEdges()));
+		connect(ui->tresholdSpin, SIGNAL(valueChanged(int)), this, SLOT(detectEdges()));
 }
 
 void MarrHildreth::detectEdges() {
@@ -56,100 +56,79 @@ void MarrHildreth::detectEdges() {
 
 		edges = blured.clone();
 
-		int logmask[5][5] = {
+		int logOperator[5][5] = {
 			{0, 0, -1, 0, 0},
 			{0, -1, -2, -1, 0},
 			{-1, -2, 16, -2, -1},
 			{0, -1, -2, -1, 0},
 			{0, 0, -1, 0, 0}
 		};
-		int l1 = 5, l2 = 3;
-		int temp;
-		int j = 0, l = 0;
+		int l1 = 5;
 
-		const int border1 = l1 / 2;
-		int border2 = l2 / 2;
+		int border1 = 2;
+		int border2 = 1;
 
 		int h = edges.rows;
 		int w = edges.cols;
 
-		int newimp[h][w];
-		for (int i = 0; i < h; i++)
+		int tempImage[h][w];
+		for (int i = 0; i < h; i++) {
 			for (int j = 0; j < w; j++) {
-				newimp[i][j] = 0;
+				tempImage[i][j] = 0;
 				edges.at<uchar>(i, j) = 0;
 			}
+		}
 
 		//log convolution
-		int m, spix;
+		int value;
 
 		for (int i = border1; i < h - border1; i++) {
-			for (j = border1; j < w - border1; j++) {
-				spix = 0;
+			for (int j = border1; j < w - border1; j++) {
+				value = 0;
 				for (int k = 0; k < l1; k++) {
-					for (int m = 0; m < l1; m++) {
-						spix = spix + (logmask[k][m] * blured.at<uchar>(i - border1 + k, j - border1 + m));
+					for (int l = 0; l < l1; l++) {
+						value = value + (logOperator[k][l] * blured.at<uchar>(i - border1 + k, j - border1 + l));
 					}
 				}
-				newimp[i][j] = spix;
+				tempImage[i][j] = value;
 			}
 		}
 
 		//zero crossing + tresholding
 
-		int max = 0, th;
+		int max = 0;
 
 		for (int k = 0;k < h; k++) {
 			for (int i = 0; i < w; i++) {
-				if (newimp[k][i] > max)
-					max = newimp[k][i];
+				if (tempImage[k][i] > max)
+					max = tempImage[k][i];
 			}
 		}
-		th = int(this->ui->tresholdSpin->value() * max);
+		int treshold = this->ui->tresholdSpin->value();
 
 		for (int i = border2; i < h - border2; i++) {
 			for (int j = border2; j < w - border2; j++) {
-				if (newimp[i][j] != 0) {
-					if ((newimp[i][j + 1] >= 0 && newimp[i][j - 1] < 0) || (newimp[i][j + 1] < 0 && newimp[i][j - 1] >= 0)) {
-						if ((abs(newimp[i][j+1]) - abs(newimp[i][j-1])) > 0 && newimp[i][j] > th) {
+				if (tempImage[i][j] != 0) {
+					if ((tempImage[i][j + 1] >= 0 && tempImage[i][j - 1] < 0) || (tempImage[i][j + 1] < 0 && tempImage[i][j - 1] >= 0)) {
+						if (tempImage[i][j] > treshold) {
 							edges.at<uchar>(i, j) = 255;
 						}
-					} else if ((newimp[i + 1][j] >= 0 && newimp[i - 1][j] < 0) || (newimp[i + 1][j] < 0 && newimp[i - 1][j] >= 0)) {
-						if ((abs(newimp[i+1][j]) - abs(newimp[i-1][j])) > 0 && newimp[i][j] > th) {
+					} else if ((tempImage[i + 1][j] >= 0 && tempImage[i - 1][j] < 0) || (tempImage[i + 1][j] < 0 && tempImage[i - 1][j] >= 0)) {
+						if (tempImage[i][j] > treshold) {
 							edges.at<uchar>(i, j) = 255;
 						}
-					} else if ((newimp[i + 1][j + 1] >= 0 && newimp[i - 1][j - 1] < 0) || (newimp[i + 1][j + 1] < 0 && newimp[i - 1][j - 1] >= 0)) {
-						if ((abs(newimp[i+1][j+1]) - abs(newimp[i-1][j-1])) > 0 && newimp[i][j] > th) {
+					} else if ((tempImage[i + 1][j + 1] >= 0 && tempImage[i - 1][j - 1] < 0) || (tempImage[i + 1][j + 1] < 0 && tempImage[i - 1][j - 1] >= 0)) {
+						if (tempImage[i][j] > treshold) {
 							edges.at<uchar>(i, j) = 255;
 						}
-					} else if ((newimp[i - 1][j + 1] >= 0 && newimp[i + 1][j - 1] < 0) || (newimp[i - 1][j + 1] < 0 && newimp[i + 1][j - 1] >= 0)) {
-						if ((abs(newimp[i-1][j+1]) - abs(newimp[i+1][j-1])) > 0 && newimp[i][j] > th) {
+					} else if ((tempImage[i - 1][j + 1] >= 0 && tempImage[i + 1][j - 1] < 0) || (tempImage[i - 1][j + 1] < 0 && tempImage[i + 1][j - 1] >= 0)) {
+						if (tempImage[i][j] > treshold) {
 							edges.at<uchar>(i, j) = 255;
 						}
 					}
 				}
 			}
 		}
-
-
-
-		/*double magnitude;
-		int val, rows = img.rows - 1, cols = img.cols - 1;
-		double dx, dy;
-
-		for (int i = 1; i < rows; i++) {
-			for (int j = 1; j < cols; j++) {
-                dx = (double) (img.at<uchar>(i+1, j) - img.at<uchar>(i-1, j)) / 2.0;
-                dy = (double) (img.at<uchar>(i, j+1) - img.at<uchar>(i, j-1)) / 2.0;
-
-				magnitude = sqrt(dx * dx + dy * dy);
-
-				val = (int) round(magnitude);
-				if (val > 255) val = 255;
-
-                edges.at<uchar>(i-1, j-1) = val;
-			}
-		}*/
 
 
 		showImage();
