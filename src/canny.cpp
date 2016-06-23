@@ -1,6 +1,5 @@
 #include "canny.h"
 #include "ui_canny.h"
-#include <iostream>
 
 CannyDetection::CannyDetection(cv::Mat *src, QWidget *parent) :
     QMainWindow(parent),

@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QDebug>
 
 using namespace cv;
 
@@ -28,26 +27,10 @@ void MainWindow::on_action_Load_triggered()
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open Image"), QDir::currentPath(), tr("Image Files (*.png *.jpg *.bmp)"));
 
-    //    QString fileName = QFileDialog::getOpenFileName(this,         //to je moje
-    //        tr("Open Image"), "/usr/share/backgrounds/linuxmint-rosa", tr("Image Files (*.png *.jpg *.bmp)"));
 
     if (!fileName.isNull() && !fileName.isEmpty()) {
         img = imread(fileName.toStdString(), CV_LOAD_IMAGE_COLOR);
 
-        //    if (img.rows > 512 || img.cols > 512 ) { // zavest konstantu
-        //        double scale;
-        //        double height = static_cast<double>(img.rows);
-        //        double width = static_cast<double>(img.cols);
-        //        if (img.rows > img.cols) {
-        //            scale = height / 512.0;
-        //        } else {
-        //            scale = width / 512.0;
-        //        }
-
-        //        cv::Size size((int) round(width / scale), (int) round(height / scale));
-        //        cv::Mat src = img;
-        //        cv::resize(src, img, size);
-        //    }
         if (!img.empty()) {
         ui->label->setPixmap(QPixmap::fromImage(QImage((unsigned char*) img.data, img.cols, img.rows, img.step, QImage::Format_RGB888).rgbSwapped()));
         showImage();

@@ -13,7 +13,6 @@
 #include <QMainWindow>
 #include <QDir>
 #include <QFileDialog>
-#include <QTimer>
 
 namespace Ui {
 class MainWindow;

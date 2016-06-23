@@ -58,7 +58,6 @@ void DefinedDirection::detectEdges() {
     int direction = ui->directionComboBox->currentIndex();
     cv::Mat blured;
     cv::blur(img, blured, cv::Size(3,3));
-    //cv::medianBlur(img, blured, 3);
 
     edges.create(blured.size(), CV_64F);
 

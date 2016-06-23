@@ -1,6 +1,5 @@
 #include "laplace.h"
 #include "ui_laplace.h"
-#include <iostream>
 
 Laplace::Laplace(cv::Mat *src, QWidget *parent) :
     QMainWindow(parent),
@@ -54,7 +53,6 @@ void Laplace::prepareGUI() {
 void Laplace::detectEdges() {
     cv::Mat blured;
     cv::blur(img, blured, cv::Size(3,3));
-    //cv::medianBlur(img, blured, 3);
 
     edges.create(blured.size(), CV_64F);
     if (ui->EightRadioButton->isChecked()) op = (cv::Mat_<int>(3,3) << 1, 1, 1, 1, -8, 1, 1, 1, 1);
